@@ -67,3 +67,63 @@ let myMultiply: (val1: number, val2: number) => number;
 // myMultiply();
 myMultiply = multiply;
 console.log(myMultiply(5,2));
+
+// objects
+//            type definition                 real object
+let userData: { name: string, age: number } = {
+  name: "Max",
+  age: 27
+};
+// userData = {
+//   a: "Hello",
+//   b: 22
+// };
+
+// complex object
+//  var name   type definition
+//               array of number function
+let complex: { data: number[], output: (all: boolean) => number[]} = {
+  data: [100, 3.99, 10],
+
+  output: function (all: boolean): number[] {
+    return this.data;
+  }
+};
+// invalid..
+// complex = {};
+
+// how to reuse the type definition ? => alias is the one
+type Complex = { data: number[], output: (all: boolean) => number[]};
+
+let complex2: Complex = {
+  data: [100, 3.99, 10],
+
+  output: function (all: boolean): number[] {
+    return this.data;
+  }
+};
+
+// union types
+let myRealRealAge: number | string = 27;
+myRealRealAge = "27";
+// myRealRealAge = true;
+
+// check types
+let finalValue = 27;
+if (typeof finalValue == "number") {
+  console.log("Final value is a number")
+}
+
+// never type
+function neverReturns(): never {
+  throw  new Error('An error!');
+}
+
+// non nullable type
+let canBeNull: number | null = 12;
+canBeNull = null;
+let canBeAlsoNull;
+canBeAlsoNull = null;
+
+let canThisBeAny: number | null = null;
+canThisBeAny = 12;
