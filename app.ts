@@ -1,129 +1,128 @@
-// string
-let myName = 'Max';
-// myName = 28;
+class Person {
+  name: string;
+  private type: string;
+  protected age: number = 27;
 
-// number
-let myAge: number = 27.5;
-//myAge = 'Max';
-
-
-// boolean
-let hasHobbies: boolean = false;
-// hasHobbies = 1;
-
-// assign types
-let myRealAge: number;
-myRealAge = 27;
-// myRealAge = '27';
-
-
-// array
-let hobbies: any[] = ["Cooking", "Sports"];
-hobbies = [100];
-// hobbies = 100;
-
-
-// tuples
-let address: [string, number] = ["Superstreet", 99];
-
-// enum
-enum Color {
-  Grey,
-  Green = 100,
-  Blue = 2
-}
-
-let myColor = Color.Green;
-console.log(myColor);
-
-
-let  myCar : any = "BMW";
-console.log(myCar);
-myCar = {Brand: "BMW", Series: 3};
-console.log(myCar);
-
-// functions
-function returnMyName(): string {
-  return myName;
-}
-console.log(returnMyName());
-
-// void
-function sayHello(): void {
-  console.log("Hello!");
-}
-
-// argument types
-function multiply(value1: number, value2: number): number {
-  return value1 * value2;
-}
-//console.log(multiply(2, 'Max'))
-console.log(multiply(10, 2));
-
-// function types
-let myMultiply: (val1: number, val2: number) => number;
-
-// myMultiply = sayHello;
-// myMultiply();
-myMultiply = multiply;
-console.log(myMultiply(5,2));
-
-// objects
-//            type definition                 real object
-let userData: { name: string, age: number } = {
-  name: "Max",
-  age: 27
-};
-// userData = {
-//   a: "Hello",
-//   b: 22
-// };
-
-// complex object
-//  var name   type definition
-//               array of number function
-let complex: { data: number[], output: (all: boolean) => number[]} = {
-  data: [100, 3.99, 10],
-
-  output: function (all: boolean): number[] {
-    return this.data;
+  constructor(name: string, public username: string) {
+    this.name = name;
   }
-};
-// invalid..
-// complex = {};
 
-// how to reuse the type definition ? => alias is the one
-type Complex = { data: number[], output: (all: boolean) => number[]};
-
-let complex2: Complex = {
-  data: [100, 3.99, 10],
-
-  output: function (all: boolean): number[] {
-    return this.data;
+  printAge() {
+    console.log(this.type);
   }
-};
 
-// union types
-let myRealRealAge: number | string = 27;
-myRealRealAge = "27";
-// myRealRealAge = true;
-
-// check types
-let finalValue = 27;
-if (typeof finalValue == "number") {
-  console.log("Final value is a number")
+  private setType(type: string) {
+    this.type = type;
+    console.log(this.type);
+  }
 }
 
-// never type
-function neverReturns(): never {
-  throw  new Error('An error!');
+const person = new Person("Max", "max");
+console.log(person.name, person.username);
+// person.setType("Cool guy"); // Won't work with private method
+
+// Inheritance
+console.log("Inheritance");
+
+class Max extends Person {
+  // name = "Max";
+
+  constructor(username: string) {
+    super("Max", username);
+    this.age = 31;
+
+  }
 }
 
-// non nullable type
-let canBeNull: number | null = 12;
-canBeNull = null;
-let canBeAlsoNull;
-canBeAlsoNull = null;
+const max = new Max("max");
+console.log(max);
 
-let canThisBeAny: number | null = null;
-canThisBeAny = 12;
+// Getters and Setters
+console.log("Getters and Setters");
+
+class Plant {
+  private _species: string;
+
+  get species() {
+    return this._species;
+  }
+
+  set species(value: string) {
+    if (value.length > 3) {
+      this._species = value;
+    } else {
+      this._species = "Default";
+    }
+  }
+}
+
+let plant = new Plant();
+console.log(plant.species);
+plant.species = "AB";
+console.log(plant.species);
+plant.species = "Green Plant";
+console.log(plant.species);
+
+// Static Properties and Methods
+console.log("Static Properties and Methods");
+
+class Helpers {
+  static PI: number = 3.14;
+  static calcCircumference(diameter: number): number {
+    return this.PI * diameter;
+  }
+}
+
+console.log(2 * Helpers.PI);
+console.log(Helpers.calcCircumference(8));
+
+// Abstract classes
+console.log("Abstract classes");
+
+abstract class Project {
+  projectName: string = "Default";
+  budget: number;
+
+  abstract changeName(name: string): void;
+
+  calcBudget() {
+    return this.budget * 2;
+  }
+}
+
+class ITProject extends Project {
+
+  changeName(name: string): void {
+    this.projectName = name;
+  }
+}
+
+let newProject = new ITProject();
+console.log(newProject);
+newProject.changeName("Super IT Project");
+console.log(newProject);
+
+// private constructors
+console.log("privaete constructors");
+
+class OnlyOne {
+  private static instance: OnlyOne;
+
+  private constructor(public readonly name: string) {
+  }
+
+  static getInstance() {
+    if (!OnlyOne.instance) {
+      OnlyOne.instance = new OnlyOne("The Only One");
+    }
+
+    return OnlyOne.instance;
+  }
+}
+
+// let wrong = new OnlyOne('The Only One');
+let right = OnlyOne.getInstance();
+console.log(right.name);
+// right.name = "Something else";
+
+
