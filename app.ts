@@ -44,3 +44,34 @@ myPerson.lastName = "Anything";
 greet(myPerson);
 myPerson.greet("Anything");
 myPerson.greet(myPerson.lastName);
+
+// Function types
+
+
+interface DoubleValueFunc {
+  (number1: number, number2: number): number;
+}
+
+let myDoubleFunction: DoubleValueFunc;
+myDoubleFunction = function (value1: number, value2: number) {
+  return (value1 + value2) * 2;
+};
+
+console.log(myDoubleFunction(10, 20));
+
+
+// Interface inheritance
+
+interface AgedPerson extends NamedPerson {
+  age: number;
+}
+
+const oldPerson: AgedPerson = {
+  age: 27,
+  firstName: "Max",
+  greet(lastName: string): void {
+    console.log("Hello!")
+  }
+};
+
+console.log(oldPerson);
