@@ -1,129 +1,55 @@
-// string
-let myName = 'Max';
-// myName = 28;
-
-// number
-let myAge: number = 27.5;
-//myAge = 'Max';
-
-
-// boolean
-let hasHobbies: boolean = false;
-// hasHobbies = 1;
-
-// assign types
-let myRealAge: number;
-myRealAge = 27;
-// myRealAge = '27';
-
-
-// array
-let hobbies: any[] = ["Cooking", "Sports"];
-hobbies = [100];
-// hobbies = 100;
-
-
-// tuples
-let address: [string, number] = ["Superstreet", 99];
-
-// enum
-enum Color {
-  Grey,
-  Green = 100,
-  Blue = 2
+// Simple Generic
+function echo(data: any) {
+  return data;
 }
 
-let myColor = Color.Green;
-console.log(myColor);
+console.log(echo("Max"));
+console.log(echo(27));
+console.log(echo({name: "Max", age: 27}));
 
-
-let  myCar : any = "BMW";
-console.log(myCar);
-myCar = {Brand: "BMW", Series: 3};
-console.log(myCar);
-
-// functions
-function returnMyName(): string {
-  return myName;
-}
-console.log(returnMyName());
-
-// void
-function sayHello(): void {
-  console.log("Hello!");
+function betterEcho<T>(data: T) {
+  return data;
 }
 
-// argument types
-function multiply(value1: number, value2: number): number {
-  return value1 * value2;
+// Better Generic
+console.log(betterEcho("Max").length);
+console.log(betterEcho(27));
+console.log(betterEcho({name: "Max", age: 27}));
+
+// Built-in Generics
+// Array is the generic type
+const testResults: Array<number> = [1.94, 2.33];
+testResults.push(-2.99);
+// testResults.push("string"); // invalid operation
+console.log(testResults);
+
+// Arrays
+function printAll<T>(args: T[]) {
+  args.forEach((elem) => console.log(elem));
 }
-//console.log(multiply(2, 'Max'))
-console.log(multiply(10, 2));
 
-// function types
-let myMultiply: (val1: number, val2: number) => number;
+printAll<string>(["Apple", "Banana"]);
 
-// myMultiply = sayHello;
-// myMultiply();
-myMultiply = multiply;
-console.log(myMultiply(5,2));
+// Generic Types
+//         | type assignment   |
+const echo2: <T> (data: T) => T = betterEcho;
 
-// objects
-//            type definition                 real object
-let userData: { name: string, age: number } = {
-  name: "Max",
-  age: 27
-};
-// userData = {
-//   a: "Hello",
-//   b: 22
-// };
+console.log(echo2<string>("Something"));
 
-// complex object
-//  var name   type definition
-//               array of number function
-let complex: { data: number[], output: (all: boolean) => number[]} = {
-  data: [100, 3.99, 10],
+// Generic Class
+class SimpleMath<T extends number | string, U extends number | string> {
+  baseValue: T;
+  multiplyValue: U;
 
-  output: function (all: boolean): number[] {
-    return this.data;
+  calculate(): number {
+    return +this.baseValue * +this.multiplyValue;
   }
-};
-// invalid..
-// complex = {};
-
-// how to reuse the type definition ? => alias is the one
-type Complex = { data: number[], output: (all: boolean) => number[]};
-
-let complex2: Complex = {
-  data: [100, 3.99, 10],
-
-  output: function (all: boolean): number[] {
-    return this.data;
-  }
-};
-
-// union types
-let myRealRealAge: number | string = 27;
-myRealRealAge = "27";
-// myRealRealAge = true;
-
-// check types
-let finalValue = 27;
-if (typeof finalValue == "number") {
-  console.log("Final value is a number")
 }
 
-// never type
-function neverReturns(): never {
-  throw  new Error('An error!');
-}
+const simpleMath = new SimpleMath<number, string>();
 
-// non nullable type
-let canBeNull: number | null = 12;
-canBeNull = null;
-let canBeAlsoNull;
-canBeAlsoNull = null;
+simpleMath.baseValue = 10;
+// simpleMath.baseValue = "Something";
+simpleMath.multiplyValue = "20";
 
-let canThisBeAny: number | null = null;
-canThisBeAny = 12;
+console.log((simpleMath.calculate()));
