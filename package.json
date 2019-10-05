@@ -1,0 +1,22 @@
+{
+  "name": "ts-notes",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "lite-server"
+  },
+  "keywords": [
+    "typescript",
+    "course"
+  ],
+  "author": "",
+  "license": "MIT",
+  "description": "Complete TypeScript Course",
+  "devDependencies": {
+    "lite-server": "^2.5.4"
+  },
+  "dependencies": {
+    "systemjs": "^6.1.2"
+  }
+}

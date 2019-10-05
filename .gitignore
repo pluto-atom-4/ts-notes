@@ -223,7 +223,6 @@ typings/
 /.idea/jsLibraryMappings.xml
 /.idea/misc.xml
 /.idea/modules.xml
-/package.json
 /.idea/ts-notes.iml
 /.idea/vcs.xml
 /app.js
